@@ -12,9 +12,9 @@ Route::get('/', function () {
 })->middleware(UsersAdminAuth::class);
 
 Route::prefix("/admin")->group(function(){
-    Route::get("/login", [SessionUsersAdminController::class, "create"])->name("users_admin_login"); 
+    Route::get("/login", [SessionUsersAdminController::class, "create"])->middleware("guest:users_admin")->name("users_admin_login"); 
     Route::post("/login", [SessionUsersAdminController::class, "store"]);
-    Route::get("/register", [UsersAdminController::class, "create"]);
+    Route::get("/register", [UsersAdminController::class, "create"])->middleware("guest:users_admin");
     Route::post("/register", [UsersAdminController::class, "store"]);
     Route::post("/logout", [SessionUsersAdminController::class, "destroy"]);
 });

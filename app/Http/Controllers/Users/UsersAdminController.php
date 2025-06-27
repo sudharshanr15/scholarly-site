@@ -25,9 +25,9 @@ class UsersAdminController extends Controller
      */
     public function create()
     {
-        if(Auth::guard($this->guard)->user()){
-            return redirect("/");
-        }
+        // if(Auth::guard($this->guard)->user()){
+        //     return redirect("/");
+        // }
         return view("users_admin.register");
     }
 
