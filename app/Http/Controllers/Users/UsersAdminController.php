@@ -45,6 +45,8 @@ class UsersAdminController extends Controller
 
         $user = UserAdmin::create($attributes);
 
+        $user->sendEmailVerificationNotification();
+
         Auth::guard($this->guard)->login($user);
 
         return redirect("/");

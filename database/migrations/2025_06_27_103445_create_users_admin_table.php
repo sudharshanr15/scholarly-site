@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("mobile_no")->nullable();
             $table->string("password");
             $table->foreignId("department_id")->constrained("departments", "id", "users_admin_department_id");
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

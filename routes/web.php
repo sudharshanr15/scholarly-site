@@ -3,7 +3,8 @@
 use App\Http\Controllers\Session\UsersAdminController as SessionUsersAdminController;
 use App\Http\Controllers\Users\UsersAdminController;
 use App\Http\Middleware\UsersAdminAuth;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,3 +18,19 @@ Route::prefix("/admin")->group(function(){
     Route::post("/register", [UsersAdminController::class, "store"]);
     Route::post("/logout", [SessionUsersAdminController::class, "destroy"]);
 });
+
+Route::get("/email/verify", function(){
+    return view("auth.verify-email");
+})->middleware("auth:users_admin")->name("verification.notice");
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/');
+})->middleware([UsersAdminAuth::class, 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(["auth:users_admin", 'throttle:6,1'])->name('verification.send');
