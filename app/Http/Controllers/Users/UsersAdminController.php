@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 
 class UsersAdminController extends Controller
-{
+{   
+    private string $guard = "users_admin";
+
     /**
      * Display a listing of the resource.
      */
@@ -23,6 +25,9 @@ class UsersAdminController extends Controller
      */
     public function create()
     {
+        if(Auth::guard($this->guard)->user()){
+            return redirect("/");
+        }
         return view("users_admin.register");
     }
 
@@ -40,7 +45,7 @@ class UsersAdminController extends Controller
 
         $user = UserAdmin::create($attributes);
 
-        Auth::guard("users_admin")->login($user);
+        Auth::guard($this->guard)->login($user);
 
         return redirect("/");
     }

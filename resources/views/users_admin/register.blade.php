@@ -1,7 +1,5 @@
 <h1>Register</h1>
 
-
-@guest("users_admin")
 <form action="" method="POST">
     @csrf
     <div>
@@ -34,4 +32,3 @@
     </div>
     <input type="submit" name="Submit">
 </form>
-@endguest
