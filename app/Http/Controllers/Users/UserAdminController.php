@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 
-class UsersAdminController extends Controller
+class UserAdminController extends Controller
 {   
     private string $guard = "users_admin";
 

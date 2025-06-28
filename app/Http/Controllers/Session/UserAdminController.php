@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 
-class UsersAdminController extends Controller
+class UserAdminController extends Controller
 {
     private string $guard = "users_admin";
 

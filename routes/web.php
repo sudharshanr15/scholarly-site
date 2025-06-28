@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Session\UsersAdminController as SessionUsersAdminController;
-use App\Http\Controllers\Users\UsersAdminController;
+use App\Http\Controllers\Session\UserAdminController as SessionUserAdminController;
+use App\Http\Controllers\Users\UserAdminController;
 use App\Http\Middleware\UsersAdminAuth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -12,11 +12,11 @@ Route::get('/', function () {
 })->middleware(UsersAdminAuth::class);
 
 Route::prefix("/admin")->group(function(){
-    Route::get("/login", [SessionUsersAdminController::class, "create"])->middleware("guest:users_admin")->name("users_admin_login"); 
-    Route::post("/login", [SessionUsersAdminController::class, "store"]);
-    Route::get("/register", [UsersAdminController::class, "create"])->middleware("guest:users_admin");
-    Route::post("/register", [UsersAdminController::class, "store"]);
-    Route::post("/logout", [SessionUsersAdminController::class, "destroy"]);
+    Route::get("/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("users_admin_login"); 
+    Route::post("/login", [SessionUserAdminController::class, "store"]);
+    Route::get("/register", [UserAdminController::class, "create"])->middleware("guest:users_admin");
+    Route::post("/register", [UserAdminController::class, "store"]);
+    Route::post("/logout", [SessionUserAdminController::class, "destroy"]);
 });
 
 Route::get("/email/verify", function(){
