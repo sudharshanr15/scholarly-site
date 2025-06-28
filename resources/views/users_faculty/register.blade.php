@@ -1,3 +1,5 @@
+<p><a href="/">Home</a></p>
+
 <h1>Register Faculty</h1>
 
 <form action="" method="POST">
@@ -32,3 +34,4 @@
     </div>
     <input type="submit" name="Submit">
 </form>
+<p>Already a user? <a href="/faculty/login">Login</a></p>

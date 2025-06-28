@@ -1,4 +1,13 @@
-@guest
+@guest('users_faculty')
+<p>
+    <a href="/faculty/login">Faculty Login</a>
+</p>
+@endguest
+
+@guest("users_admin")
+<p>
+    <a href="/admin/login">Admin Login</a>
+</p>
 @endguest
 
 @auth("users_admin")

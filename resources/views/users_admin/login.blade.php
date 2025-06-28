@@ -1,4 +1,6 @@
-<h1>Login</h1>
+<p><a href="/">Home</a></p>
+
+<h1>Admin Login</h1>
 
 <form action="" method="POST">
     @csrf
@@ -17,3 +19,5 @@
     <input type="submit" name="submit">
 
 </form>
+
+<p>Not registered? <a href="/admin/register">Register</a></p>

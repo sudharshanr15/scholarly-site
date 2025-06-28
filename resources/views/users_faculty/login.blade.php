@@ -1,4 +1,5 @@
-<h1>Login Faculty</h1>
+<p><a href="/">Home</a></p>
+<h1>Faculty Login</h1>
 
 <form action="" method="POST">
     @csrf
@@ -17,3 +18,5 @@
     <input type="submit" name="submit">
 
 </form>
+
+<p>Not registered? <a href="/faculty/register">Register</a></p>

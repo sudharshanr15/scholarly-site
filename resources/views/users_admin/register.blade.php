@@ -1,3 +1,5 @@
+<p><a href="/">Home</a></p>
+
 <h1>Register</h1>
 
 <form action="" method="POST">
@@ -32,3 +34,5 @@
     </div>
     <input type="submit" name="Submit">
 </form>
+
+<p>Already a user? <a href="/admin/login">Login</a></p>
