@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Session\UserAdminController as SessionUserAdminController;
+use App\Http\Controllers\Session\UserFacultyController as SessionUserFacultyController;
+use App\Http\Controllers\Users\UserFacultyController;
 use App\Http\Controllers\Users\UserAdminController;
 use App\Http\Middleware\UsersAdminAuth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -9,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware(UsersAdminAuth::class);
+});
 
 Route::prefix("/admin")->group(function(){
     Route::get("/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("users_admin_login"); 
@@ -17,6 +19,14 @@ Route::prefix("/admin")->group(function(){
     Route::get("/register", [UserAdminController::class, "create"])->middleware("guest:users_admin");
     Route::post("/register", [UserAdminController::class, "store"]);
     Route::post("/logout", [SessionUserAdminController::class, "destroy"]);
+});
+
+Route::prefix("/faculty")->group(function(){
+    Route::get("/login", [SessionUserFacultyController::class, "create"])->middleware("guest:users_faculty")->name("users_faculty_login");
+    Route::post("/login", [SessionUserFacultyController::class, "store"]);
+    Route::get("/register", [UserFacultyController::class, "create"])->middleware("guest:users_faculty");
+    Route::post("/register", [UserFacultyController::class, "store"]);
+    Route::post("/logout", [SessionUserFacultyController::class, "destroy"]);
 });
 
 Route::get("/email/verify", function(){

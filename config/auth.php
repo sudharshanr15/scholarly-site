@@ -43,6 +43,10 @@ return [
         "users_admin" => [
             'driver' => 'session',
             'provider' => 'users_admin',
+        ],
+        "users_faculty" => [
+            'driver' => 'session',
+            'provider' => 'users_faculty',
         ]
     ],
 
@@ -71,6 +75,10 @@ return [
         "users_admin" => [
             "driver" => "eloquent",
             "model" => App\Models\UserAdmin::class
+        ],
+        "users_faculty" => [
+            "driver" => "eloquent",
+            "model" => App\Models\UserFaculty::class
         ]
 
         // 'users' => [
@@ -107,6 +115,12 @@ return [
         ],
         'users_admin' => [
             'provider' => 'users_admin',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'users_faculty' => [
+            'provider' => 'users_faculty',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
