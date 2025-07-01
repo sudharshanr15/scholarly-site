@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CampusController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\Session\UserAdminController as SessionUserAdminController;
 use App\Http\Controllers\Session\UserController as SessionUserController;
 use App\Http\Controllers\Session\UserFacultyController as SessionUserFacultyController;
@@ -80,6 +81,11 @@ Route::prefix("/maintainer")->group(function(){
         Route::post("/campus", [CampusController::class, "store"]);
         Route::get("/campus/{id}", [CampusController::class, "edit"])->name("campus.edit");
         Route::post("/campus/{id}", [CampusController::class, "update"]);
+
+        Route::get("/school", [SchoolController::class, "create"])->name("school.index");
+        Route::post("/school", [SchoolController::class, "store"]);
+        Route::get("/school/{id}", [SchoolController::class, "edit"])->name("school.edit");
+        Route::post("/school/{id}", [SchoolController::class, "update"]);
     });
 });
 
