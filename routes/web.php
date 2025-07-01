@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CampusController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\Session\UserAdminController as SessionUserAdminController;
 use App\Http\Controllers\Session\UserController as SessionUserController;
@@ -86,6 +87,11 @@ Route::prefix("/maintainer")->group(function(){
         Route::post("/school", [SchoolController::class, "store"]);
         Route::get("/school/{id}", [SchoolController::class, "edit"])->name("school.edit");
         Route::post("/school/{id}", [SchoolController::class, "update"]);
+
+        Route::get("/department", [DepartmentController::class, "create"])->name("department.index");
+        Route::post("/department", [DepartmentController::class, "store"]);
+        Route::get("/department/{id}", [DepartmentController::class, "edit"])->name("department.edit");
+        Route::post("/department/{id}", [DepartmentController::class, "update"]);
     });
 });
 
