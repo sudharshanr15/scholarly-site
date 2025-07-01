@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Session\UserAdminController as SessionUserAdminController;
+use App\Http\Controllers\Session\UserController as SessionUserController;
 use App\Http\Controllers\Session\UserFacultyController as SessionUserFacultyController;
+use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Users\UserFacultyController;
 use App\Http\Controllers\Users\UserAdminController;
 use App\Http\Middleware\UsersAdminAuth;
@@ -64,3 +66,28 @@ Route::prefix("/faculty")->group(function(){
         return back()->with('message', 'Verification link sent!');
     })->middleware(["auth:users_faculty", 'throttle:6,1'])->name('user_faculty.verification.send');
 });
+
+Route::prefix("/maintainer")->group(function(){
+    Route::get("/login", [SessionUserController::class, "create"]);
+    Route::post("/login", [SessionUserController::class, "store"]);
+    Route::get("/register", [UserController::class, "create"]);
+    Route::post("/register", [UserController::class, "store"]);
+    Route::post("/logout", [SessionUserController::class, "destroy"]);
+});
+
+// Email Verification
+Route::get("/email/verify", function(){
+    return view("auth.verify-email");
+})->middleware("auth")->name("verification.notice");
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/');
+})->middleware(["auth", 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(["auth", 'throttle:6,1'])->name('verification.send');

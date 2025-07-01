@@ -4,6 +4,14 @@
 </p>
 @endguest
 
+@auth
+<p>SuperUser is logged in</p>
+<form action="/maintainer/logout" method="POST">
+    @csrf
+    <button type="submit">logout</button>
+</form>
+@endauth
+
 @guest("users_admin")
 <p>
     <a href="/admin/login">Admin Login</a>
