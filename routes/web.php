@@ -14,33 +14,53 @@ Route::get('/', function () {
 });
 
 Route::prefix("/admin")->group(function(){
+    // User Authentication
     Route::get("/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("users_admin_login"); 
     Route::post("/login", [SessionUserAdminController::class, "store"]);
     Route::get("/register", [UserAdminController::class, "create"])->middleware("guest:users_admin");
     Route::post("/register", [UserAdminController::class, "store"]);
     Route::post("/logout", [SessionUserAdminController::class, "destroy"]);
+
+    // Email Verification
+    Route::get("/email/verify", function(){
+        return view("auth.verify-email");
+    })->middleware("auth:users_admin")->name("user_admin.verification.notice");
+
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+    
+        return redirect('/');
+    })->middleware(["auth:users_admin", 'signed'])->name('user_admin.verification.verify');
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+    
+        return back()->with('message', 'Verification link sent!');
+    })->middleware(["auth:users_admin", 'throttle:6,1'])->name('user_admin.verification.send');
 });
 
 Route::prefix("/faculty")->group(function(){
+    // User Authentication
     Route::get("/login", [SessionUserFacultyController::class, "create"])->middleware("guest:users_faculty")->name("users_faculty_login");
     Route::post("/login", [SessionUserFacultyController::class, "store"]);
     Route::get("/register", [UserFacultyController::class, "create"])->middleware("guest:users_faculty");
     Route::post("/register", [UserFacultyController::class, "store"]);
     Route::post("/logout", [SessionUserFacultyController::class, "destroy"]);
+
+    // Email Verification
+    Route::get("/email/verify", function(){
+        return view("auth.verify-email");
+    })->middleware("auth:users_faculty")->name("user_faculty.verification.notice");
+
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+    
+        return redirect('/');
+    })->middleware(["auth:users_faculty", 'signed'])->name('user_faculty.verification.verify');
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+    
+        return back()->with('message', 'Verification link sent!');
+    })->middleware(["auth:users_faculty", 'throttle:6,1'])->name('user_faculty.verification.send');
 });
-
-Route::get("/email/verify", function(){
-    return view("auth.verify-email");
-})->middleware("auth:users_admin")->name("verification.notice");
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
- 
-    return redirect('/');
-})->middleware([UsersAdminAuth::class, 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
- 
-    return back()->with('message', 'Verification link sent!');
-})->middleware(["auth:users_admin", 'throttle:6,1'])->name('verification.send');

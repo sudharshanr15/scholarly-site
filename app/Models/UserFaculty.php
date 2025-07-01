@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\VerifyUserFaculty;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -21,5 +21,9 @@ class UserFaculty extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sendEmailVerificationNotification(){
+        $this->notify(new VerifyUserFaculty);
     }
 }
