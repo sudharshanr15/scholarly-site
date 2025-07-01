@@ -15,7 +15,7 @@
         <label for="">Select Campus: </label>
         <select name="campus_id" id="">
             @foreach($campuses as $campus)
-            <option value="{{ $campus['id'] }}" {{ $campus['id'] == $school["id"] ? "selected" : "" }}>{{ $campus['name'] }}</option>
+            <option value="{{ $campus['id'] }}" @selected($campus['id'] == $school['campus_id'])>{{ $campus['name'] }}</option>
             @endforeach
         </select>
         @error("campus_id")
