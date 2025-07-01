@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampusController;
 use App\Http\Controllers\Session\UserAdminController as SessionUserAdminController;
 use App\Http\Controllers\Session\UserController as SessionUserController;
 use App\Http\Controllers\Session\UserFacultyController as SessionUserFacultyController;
@@ -68,11 +69,18 @@ Route::prefix("/faculty")->group(function(){
 });
 
 Route::prefix("/maintainer")->group(function(){
-    Route::get("/login", [SessionUserController::class, "create"]);
+    Route::get("/login", [SessionUserController::class, "create"])->name("login");
     Route::post("/login", [SessionUserController::class, "store"]);
     Route::get("/register", [UserController::class, "create"]);
     Route::post("/register", [UserController::class, "store"]);
     Route::post("/logout", [SessionUserController::class, "destroy"]);
+
+    Route::middleware("auth")->group(function(){
+        Route::get("/campus", [CampusController::class, "create"])->name("campus.index");
+        Route::post("/campus", [CampusController::class, "store"]);
+        Route::get("/campus/{id}", [CampusController::class, "edit"])->name("campus.edit");
+        Route::post("/campus/{id}", [CampusController::class, "update"]);
+    });
 });
 
 // Email Verification
