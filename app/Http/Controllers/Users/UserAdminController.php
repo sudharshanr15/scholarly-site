@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use App\Models\UserAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,10 +26,9 @@ class UserAdminController extends Controller
      */
     public function create()
     {
-        // if(Auth::guard($this->guard)->user()){
-        //     return redirect("/");
-        // }
-        return view("users_admin.register");
+        $departments = Department::all();
+
+        return view("users_admin.register", ["departments" => $departments]);
     }
 
     /**
@@ -40,6 +40,7 @@ class UserAdminController extends Controller
             "full_name" => ["required", "min:3"],
             "email" => ["required", "email", "unique:users_admin"],
             "password" => ["required", Password::min(8)->mixedCase()->numbers()],
+            "department_id" => ["required", "exists:departments,id"],
             "mobile_no" => ["required"]
         ]);
 
