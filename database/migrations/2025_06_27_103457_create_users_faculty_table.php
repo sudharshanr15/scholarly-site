@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string("wosID")->nullable();
             $table->string("orchidID")->nullable();
             $table->foreignId("department_id")->constrained("departments", "id", "users_faculty_department_id");
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
