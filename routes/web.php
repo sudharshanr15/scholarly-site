@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CampusController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\FacultyCitationController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\Session\UserAdminController as SessionUserAdminController;
 use App\Http\Controllers\Session\UserController as SessionUserController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Users\UserFacultyController;
 use App\Http\Controllers\Users\UserAdminController;
 use App\Http\Middleware\UsersAdminAuth;
+use App\Http\Middleware\UsersFacultyAuth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +70,11 @@ Route::prefix("/faculty")->group(function(){
     
         return back()->with('message', 'Verification link sent!');
     })->middleware(["auth:users_faculty", 'throttle:6,1'])->name('user_faculty.verification.send');
+
+    Route::middleware([UsersFacultyAuth::class])->group(function(){
+        Route::get("/citation/{id}", [FacultyCitationController::class, "edit"]);
+        Route::post("/citation/{id}", [FacultyCitationController::class, "update_faculty"]);
+    });
 });
 
 Route::prefix("/maintainer")->group(function(){
