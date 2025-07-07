@@ -22,8 +22,8 @@ Route::prefix("/admin")->group(function(){
     // User Authentication
     Route::get("/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("users_admin_login"); 
     Route::post("/login", [SessionUserAdminController::class, "store"]);
-    Route::get("/register", [UserAdminController::class, "create"])->middleware("guest:users_admin");
-    Route::post("/register", [UserAdminController::class, "store"]);
+    Route::get("/register", [UserAdminController::class, "create"])->middleware("auth");
+    Route::post("/register", [UserAdminController::class, "store"])->middleware("auth");
     Route::post("/logout", [SessionUserAdminController::class, "destroy"]);
 
     // Email Verification
@@ -48,8 +48,8 @@ Route::prefix("/faculty")->group(function(){
     // User Authentication
     Route::get("/login", [SessionUserFacultyController::class, "create"])->middleware("guest:users_faculty")->name("users_faculty_login");
     Route::post("/login", [SessionUserFacultyController::class, "store"]);
-    Route::get("/register", [UserFacultyController::class, "create"])->middleware("guest:users_faculty");
-    Route::post("/register", [UserFacultyController::class, "store"]);
+    Route::get("/register", [UserFacultyController::class, "create"])->middleware(UsersAdminAuth::class);
+    Route::post("/register", [UserFacultyController::class, "store"])->middleware(UsersAdminAuth::class);
     Route::post("/logout", [SessionUserFacultyController::class, "destroy"]);
 
     // Email Verification
