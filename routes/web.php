@@ -80,7 +80,7 @@ Route::prefix("/faculty")->group(function(){
 Route::prefix("/maintainer")->group(function(){
     Route::get("/login", [SessionUserController::class, "create"])->name("login");
     Route::post("/login", [SessionUserController::class, "store"]);
-    Route::get("/register", [UserController::class, "create"]);
+    Route::get("/register", [UserController::class, "create"])->name("register");
     Route::post("/register", [UserController::class, "store"]);
     Route::post("/logout", [SessionUserController::class, "destroy"]);
 

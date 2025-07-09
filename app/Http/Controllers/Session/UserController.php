@@ -21,7 +21,7 @@ class UserController extends Controller
 
         if(!Auth::attempt($attributes)){
             throw ValidationException::withMessages([
-                "email" => "Sorry, those credentials do not match"
+                "error" => "Sorry, those credentials do not match"
             ]);
         }
 
