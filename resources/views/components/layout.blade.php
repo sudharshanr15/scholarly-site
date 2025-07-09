@@ -7,6 +7,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    {{ $slot }}
+    <main>
+        <div class="flex items-center min-h-screen bg-light-bg dark:bg-dark-bg p-6">
+            {{ $slot }}
+        </div>
+    </main>
 </body>
 </html>

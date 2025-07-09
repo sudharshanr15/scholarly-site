@@ -1,31 +1,31 @@
-<p><a href="/">Home</a></p>
-
-<h1>Superuser Register</h1>
-
-<form action="" method="POST">
-    @csrf
-    <div>
-        <label for="">Full Name: </label>
-        <input type="text" name="name">
-        @error('full_name')
-            <p>{{ $message }}</p>
-        @enderror
+<x-layout>
+    <div class="flex justify-center w-full max-w-xl mx-auto shadow-xl">
+        <div class="w-full bg-light-fg dark:bg-dark-fg p-10">
+            <h1 class="mb-4 text-xl font-semibold text-dark-fg dark:text-gray-200">Create account</h1>
+            <form action="" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <x-form.label for="name">Full Name</x-form.label>
+                    <x-form.input id="name" name="name" placeholder="Jane Doe" value="{{ old('name') }}"></x-form.input>
+                    <x-form.error name="name"></x-form.error>
+                </div>
+                <div class="mb-4">
+                    <x-form.label for="email">Email</x-form.label>
+                    <x-form.input id="email" name="email" placeholder="user**@gmail.com" value="{{ old('email') }}"></x-form.input>
+                    <x-form.error name="email"></x-form.error>
+                </div>
+                <div class="mb-4">
+                    <x-form.label for="password">Password</x-form.label>
+                    <x-form.input id="password" name="password" placeholder="**********"></x-form.input>
+                    <x-form.error name="password"></x-form.error>
+                </div>
+                <div class="mt-4 text-center">
+                    <x-form.error name="error"></x-form.error>
+                </div>
+                <button class="bg-primary text-white rounded-lg w-full p-2 mt-4" type="submit">Create account</button>
+            </form>
+            <hr class="my-8 border border-gray-300 dark:border-gray-700">
+            <a href="{{ route("login") }}" class="text-purple-500 font-medium hover:underline block mb-2">Alraedy have an account? Login</a>
+        </div>
     </div>
-    <div>
-        <label for="">Email: </label>
-        <input type="email" name="email">
-        @error('email')
-            <p>{{ $message }}</p>
-        @enderror
-    </div>
-    <div>
-        <label for="">Password: </label>
-        <input type="password" name="password">
-        @error('password')
-            <p>{{ $message }}</p>
-        @enderror
-    </div>
-    <input type="submit" name="Submit">
-</form>
-
-<p>Already a user? <a href="/maintainer/login">Login</a></p>
+</x-layout>
