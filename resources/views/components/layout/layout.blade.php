@@ -6,10 +6,10 @@
     <title>{{ config("app.name", "Scholarly")}} </title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="bg-light-bg text-dark-text dark:bg-dark-bg dark:text-light-text">
     <main>
-        <div class="flex items-center min-h-screen bg-light-bg dark:bg-dark-bg p-6">
-            {{ $slot }}
+        <div class="min-h-screen">
+            {{ $slot }} 
         </div>
     </main>
 </body>

@@ -1,1 +1,1 @@
-<input {{ $attributes->merge(["class" => "mt-2 w-full block p-2 text-sm rounded outline outline-gray-400 focus:outline-3 dark:outline-[#4c4f52] dark:outline-gray-700 dark:bg-[#24262d] dark:text-gray-300"]) }} />
+<input {{ $attributes->merge(["class" => "mt-2 w-full block p-2 text-sm rounded text-dark-text dark:text-light-text outline outline-gray-400 focus:outline-3 dark:outline-[#4c4f52] dark:outline-gray-700 dark:bg-[#24262d]"]) }} />

@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout.Auth>
     <div class="flex justify-center w-full max-w-xl mx-auto shadow-xl">
         <div class="w-full bg-light-fg dark:bg-dark-fg p-10">
             <h1 class="mb-4 text-xl font-semibold text-dark-fg dark:text-gray-200">Create account</h1>
@@ -25,7 +25,7 @@
                 <button class="bg-primary text-white rounded-lg w-full p-2 mt-4" type="submit">Create account</button>
             </form>
             <hr class="my-8 border border-gray-300 dark:border-gray-700">
-            <a href="{{ route("login") }}" class="text-purple-500 font-medium hover:underline block mb-2">Alraedy have an account? Login</a>
+            <a href="{{ route("login") }}" class="text-purple-500 font-medium hover:underline block mb-2">Already have an account? Login</a>
         </div>
     </div>
-</x-layout>
+</x-layout.Auth>

@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout.Auth>
     <div class="flex justify-center w-full max-w-xl mx-auto shadow-xl">
         <div class="w-full bg-light-fg dark:bg-dark-fg p-10">
             <h1 class="mb-4 text-xl font-semibold text-dark-fg dark:text-gray-200">Login</h1>
@@ -24,4 +24,4 @@
             <a href="{{ route("register") }}" class="text-purple-500 font-medium hover:underline block mb-2">Create account</a>
         </div>
     </div>
-</x-layout>
+</x-layout.Auth>
