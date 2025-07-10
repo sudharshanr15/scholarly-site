@@ -5,16 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\School;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class DepartmentController extends Controller
 {
+    public function show(){
+        $departments = DB::table("departments")
+            ->join("schools", "school_id", "=", "schools.id")
+            ->select("departments.id", "departments.school_id", "departments.name as dept_name", "schools.name as school_name")
+            ->get();
+
+        return view("department.index", [
+            "departments" => $departments
+        ]);
+    }
+
     public function create(){
-        $departments = Department::all();
         $schools = School::all();
 
         return view("department.form", [
-            "departments" => $departments,
             "schools" => $schools
         ]);
     }
