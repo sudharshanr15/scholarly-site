@@ -5,17 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Campus;
 use App\Models\School;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class SchoolController extends Controller
 {
+    public function show(){
+        $schools = DB::table("schools")
+            ->join("campus", "schools.campus_id", "=", "campus.id")
+            ->select("schools.id", "schools.campus_id", "schools.name as school_name", "campus.name as campus_name")
+            ->get();
+
+        return view("school.index", [
+            "schools" => $schools
+        ]);
+    }
+
     public function create(){
         $campuses = Campus::all();
-        $schools = School::all();
 
         return view("school.form", [
-            "campuses" => $campuses,
-            "schools" => $schools
+            "campuses" => $campuses
         ]);
     }
 

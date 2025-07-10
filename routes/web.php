@@ -93,8 +93,9 @@ Route::prefix("/maintainer")->group(function(){
         Route::get("/campus/{id}", [CampusController::class, "edit"])->name("campus.edit");
         Route::post("/campus/{id}", [CampusController::class, "update"]);
 
-        Route::get("/school", [SchoolController::class, "create"])->name("school.index");
-        Route::post("/school", [SchoolController::class, "store"]);
+        Route::get("/school", [SchoolController::class, "show"])->name("school.index");
+        Route::get("/school/add", [SchoolController::class, "create"])->name("school.create");
+        Route::post("/school/add", [SchoolController::class, "store"]);
         Route::get("/school/{id}", [SchoolController::class, "edit"])->name("school.edit");
         Route::post("/school/{id}", [SchoolController::class, "update"]);
 
