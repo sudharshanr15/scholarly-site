@@ -10,6 +10,8 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
     --color-primary: var(--color-violet-700);
     /* backgroud and foreground colors */

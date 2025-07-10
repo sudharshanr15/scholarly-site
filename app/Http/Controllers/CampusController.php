@@ -9,13 +9,14 @@ use Illuminate\Validation\ValidationException;
 class CampusController extends Controller
 {
 
-    public function index(){
+    public function create(){
+        return view("campus.form");
     }
 
-    public function create(){
+    public function show(){
         $campus = Campus::all();
 
-        return view("campus.form", ["campuses" => $campus]);
+        return view("campus.index", ["campuses" => $campus]);
     }
 
     public function store(Request $request){
@@ -33,7 +34,7 @@ class CampusController extends Controller
             ]);
         }
 
-        return back();
+        return redirect()->route("campus.index");
     }
 
     public function edit(int $id){

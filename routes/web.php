@@ -87,8 +87,9 @@ Route::prefix("/maintainer")->group(function(){
     Route::middleware("auth")->group(function(){
         Route::get("/", [UserController::class, "show"])->name("maintainer.index");
 
-        Route::get("/campus", [CampusController::class, "create"])->name("campus.index");
-        Route::post("/campus", [CampusController::class, "store"]);
+        Route::get("/campus", [CampusController::class, "show"])->name("campus.index");
+        Route::get("/campus/add", [CampusController::class, "create"])->name("campus.create");
+        Route::post("/campus/add", [CampusController::class, "store"]);
         Route::get("/campus/{id}", [CampusController::class, "edit"])->name("campus.edit");
         Route::post("/campus/{id}", [CampusController::class, "update"]);
 
