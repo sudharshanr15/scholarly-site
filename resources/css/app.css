@@ -22,3 +22,9 @@
     --color-light-text: var(--color-gray-300);
     --color-dark-text: oklch(0.2695 0.0133 272.86);
 }
+
+@layer base{
+    button, a{
+        @apply cursor-pointer
+    }
+}

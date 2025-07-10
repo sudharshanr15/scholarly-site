@@ -10,6 +10,11 @@ use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
+
+    public function show(){
+        return view("user.Index");
+    }
+
     public function create(){
         return view("register");
     }

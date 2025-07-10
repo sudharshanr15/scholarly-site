@@ -2,16 +2,16 @@
 
 $pages = [
     "Dashboard" => [
-        "link" => "/"
+        "route" => "maintainer.index"
     ],
     "Campus" => [
-        "link" => route("campus.index")
+        "route" => "campus.index"
     ],
     "School" => [
-        "link" => route("school.index")
+        "route" => "school.index"
     ],
     "Department" => [
-        "link" => route("department.index")
+        "route" => "department.index"
     ]
 ]
 
@@ -23,13 +23,13 @@ $pages = [
             <ul class="mt-6 text-gray-500 dark:text-gray-400">
                 @foreach($pages as $page => $val)
                 <li class="relative px-6 py-3">
-                    @if(request()->is($val['link']))
+                    @if(request()->routeIs($val['route']))
                     <span
                         class="absolute inset-y-0 left-0 w-1 bg-primary rounded-tr-lg rounded-br-lg"
                     >
                     </span>
                     @endif
-                    <a href="{{ $val['link'] }}" class="{{ 'inline-flex items-center w-full font-semibold transition duration-150 hover:text-dark-text dark:hover:text-light-text' . (request()->is($val['link']) ? ' text-dark-text dark:text-light-text' : '') }}">
+                    <a href="{{ route($val['route']) }}" class="{{ 'inline-flex items-center w-full font-semibold transition duration-150 hover:text-dark-text dark:hover:text-light-text' . (request()->routeIs($val['route']) ? ' text-dark-text dark:text-light-text' : '') }}">
                         {{ $page }}
                     </a>
                 </li>

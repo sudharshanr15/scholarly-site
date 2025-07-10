@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect("/maintainer");
 });
 
 Route::prefix("/admin")->group(function(){
@@ -82,9 +82,11 @@ Route::prefix("/maintainer")->group(function(){
     Route::post("/login", [SessionUserController::class, "store"]);
     Route::get("/register", [UserController::class, "create"])->name("register");
     Route::post("/register", [UserController::class, "store"]);
-    Route::post("/logout", [SessionUserController::class, "destroy"]);
+    Route::post("/logout", [SessionUserController::class, "destroy"])->name("logout");
 
     Route::middleware("auth")->group(function(){
+        Route::get("/", [UserController::class, "show"])->name("maintainer.index");
+
         Route::get("/campus", [CampusController::class, "create"])->name("campus.index");
         Route::post("/campus", [CampusController::class, "store"]);
         Route::get("/campus/{id}", [CampusController::class, "edit"])->name("campus.edit");
