@@ -48,8 +48,6 @@ class UserAdminController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        Auth::guard($this->guard)->login($user);
-
         return redirect("/");
     }
 
