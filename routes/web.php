@@ -12,12 +12,22 @@ use App\Http\Controllers\Users\UserFacultyController;
 use App\Http\Controllers\Users\UserAdminController;
 use App\Http\Middleware\UsersAdminAuth;
 use App\Http\Middleware\UsersFacultyAuth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect("/maintainer");
+    if(Auth::user()){
+        return redirect()->route("maintainer.index");
+    }else if(Auth::guard("users_admin")->user()){
+        return redirect()->route("users_admin.index");
+    }else if(Auth::guard("users_faculty")->user()){
+        return redirect()->route("users_faculty.index");
+    }else{
+        throw new ModelNotFoundException();
+    }
 });
 
 Route::prefix("/admin")->group(function(){
@@ -44,13 +54,19 @@ Route::prefix("/admin")->group(function(){
     
         return back()->with('message', 'Verification link sent!');
     })->middleware(["auth:users_admin", 'throttle:6,1'])->name('user_admin.verification.send');
+
+    Route::middleware(UsersAdminAuth::class)->group(function(){
+        Route::get("/", [UserAdminController::class, "index"])->name("users_admin.index");
+        Route::get("/faculty", [UserFacultyController::class, "index_user_admin_faculty"])->name("user_admin.faculty.index");
+        Route::get("/faculty/register", [UserFacultyController::class, "create"]);
+    });
 });
 
 Route::prefix("/faculty")->group(function(){
     // User Authentication
     Route::get("/login", [SessionUserFacultyController::class, "create"])->middleware("guest:users_faculty")->name("users_faculty_login");
     Route::post("/login", [SessionUserFacultyController::class, "store"]);
-    Route::get("/register", [UserFacultyController::class, "create"])->middleware(UsersAdminAuth::class);
+    Route::get("/register", [UserFacultyController::class, "create"])->middleware(UsersAdminAuth::class)->name("faculty.register");
     Route::post("/register", [UserFacultyController::class, "store"])->middleware(UsersAdminAuth::class);
     Route::post("/logout", [SessionUserFacultyController::class, "destroy"]);
 
@@ -99,7 +115,7 @@ Route::prefix("/maintainer")->group(function(){
         Route::get("/school/{id}", [SchoolController::class, "edit"])->name("school.edit");
         Route::post("/school/{id}", [SchoolController::class, "update"]);
 
-        Route::get("/department/users", [UserAdminController::class, "index"])->name("department.users.index");
+        Route::get("/department/users", [UserAdminController::class, "index_department_users"])->name("department.users.index");
 
         Route::get("/department", [DepartmentController::class, "show"])->name("department.index");
         Route::get("/department/add", [DepartmentController::class, "create"])->name("department.create");

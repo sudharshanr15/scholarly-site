@@ -28,7 +28,7 @@ class UserAdminController extends Controller
 
         if (!Auth::guard($this->guard)->attempt($attr)){
             throw ValidationException::withMessages([
-                "email" => "Sorry, those credentials do not match"
+                "error" => "Sorry, these credentials do not match"
             ]);
         }
         
