@@ -26,7 +26,7 @@ class VerifyUserAdmin extends VerifyEmail implements ShouldQueue
         }
 
         return URL::temporarySignedRoute(
-            "user_admin.verification.verify",
+            "admin.verification.verify",
             now()->addHour(),
             [
                 "id" => $notifiable->getKey(),

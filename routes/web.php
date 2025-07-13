@@ -64,19 +64,19 @@ Route::prefix("/admin")->group(function(){
     Route::prefix("/email")->group(function(){
         Route::get("/verify", function(){
             return view("auth.verify-email");
-        })->middleware("auth:users_admin")->name("user_admin.verification.notice");
+        })->middleware("auth:users_admin")->name("admin.verification.notice");
     
         Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
             $request->fulfill();
         
             return redirect('/');
-        })->middleware(["auth:users_admin", 'signed'])->name('user_admin.verification.verify');
+        })->middleware(["auth:users_admin", 'signed'])->name('admin.verification.verify');
     
         Route::post('/verification-notification', function (Request $request) {
             $request->user()->sendEmailVerificationNotification();
         
             return back()->with('message', 'Verification link sent!');
-        })->middleware(["auth:users_admin", 'throttle:6,1'])->name('user_admin.verification.send');
+        })->middleware(["auth:users_admin", 'throttle:6,1'])->name('admin.verification.send');
     });
 
     /**
