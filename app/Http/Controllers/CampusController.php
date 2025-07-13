@@ -13,7 +13,7 @@ class CampusController extends Controller
         return view("campus.form");
     }
 
-    public function show(){
+    public function index(){
         $campus = Campus::all();
 
         return view("campus.index", ["campuses" => $campus]);

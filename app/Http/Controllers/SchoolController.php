@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 
 class SchoolController extends Controller
 {
-    public function show(){
+    public function index(){
         $schools = DB::table("schools")
             ->join("campus", "schools.campus_id", "=", "campus.id")
             ->select("schools.id", "schools.campus_id", "schools.name as school_name", "campus.name as campus_name")

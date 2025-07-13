@@ -30,62 +30,101 @@ Route::get('/', function () {
     }
 });
 
+/**
+ * Guest User Routes
+ */
+Route::middleware("guest")->group(function(){
+    /**
+     * Session Authentication endpoints
+     */
+    Route::get("/admin/login", [SessionUserAdminController::class, "create"])->name("users_admin.login"); 
+    Route::post("/admin/login", [SessionUserAdminController::class, "store"]);
+
+    Route::get("/faculty/login", [SessionUserFacultyController::class, "create"])->name("faculty.login");
+    Route::post("/faculty/login", [SessionUserFacultyController::class, "store"]);
+
+    Route::get("/login", [SessionUserController::class, "create"])->name("login");
+    Route::post("/login", [SessionUserController::class, "store"]);
+});
+
+/**
+ * Admin User Routes
+ */
 Route::prefix("/admin")->group(function(){
-    // User Authentication
-    Route::get("/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("users_admin.login"); 
-    Route::post("/login", [SessionUserAdminController::class, "store"]);
+    /**
+     * User Registration and Session
+     */
     Route::get("/register", [UserAdminController::class, "create"])->middleware("auth")->name("users_admin.register");
     Route::post("/register", [UserAdminController::class, "store"])->middleware("auth");
     Route::post("/logout", [SessionUserAdminController::class, "destroy"]);
 
-    // Email Verification
-    Route::get("/email/verify", function(){
-        return view("auth.verify-email");
-    })->middleware("auth:users_admin")->name("user_admin.verification.notice");
-
-    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-        $request->fulfill();
+    /**
+     * Email Verification
+     */
+    Route::prefix("/email")->group(function(){
+        Route::get("/verify", function(){
+            return view("auth.verify-email");
+        })->middleware("auth:users_admin")->name("user_admin.verification.notice");
     
-        return redirect('/');
-    })->middleware(["auth:users_admin", 'signed'])->name('user_admin.verification.verify');
-
-    Route::post('/email/verification-notification', function (Request $request) {
-        $request->user()->sendEmailVerificationNotification();
+        Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+            $request->fulfill();
+        
+            return redirect('/');
+        })->middleware(["auth:users_admin", 'signed'])->name('user_admin.verification.verify');
     
-        return back()->with('message', 'Verification link sent!');
-    })->middleware(["auth:users_admin", 'throttle:6,1'])->name('user_admin.verification.send');
+        Route::post('/verification-notification', function (Request $request) {
+            $request->user()->sendEmailVerificationNotification();
+        
+            return back()->with('message', 'Verification link sent!');
+        })->middleware(["auth:users_admin", 'throttle:6,1'])->name('user_admin.verification.send');
+    });
 
+    /**
+     * Authorized User endpoints
+     */
     Route::middleware(UsersAdminAuth::class)->group(function(){
         Route::get("/", [UserAdminController::class, "index"])->name("users_admin.index");
-        Route::get("/faculty", [UserFacultyController::class, "index_user_admin_faculty"])->name("user_admin.faculty.index");
+        Route::get("/faculty", [UserFacultyController::class, "index_user_admin"])->name("user_admin.faculty.index");
         Route::get("/faculty/register", [UserFacultyController::class, "create"]);
     });
 });
 
+/**
+ * Faculty User Routes
+ */
 Route::prefix("/faculty")->group(function(){
-    // User Authentication
-    Route::get("/login", [SessionUserFacultyController::class, "create"])->middleware("guest:users_faculty")->name("users_faculty_login");
-    Route::post("/login", [SessionUserFacultyController::class, "store"]);
+    /**
+     * User Registration and Session
+     */
     Route::get("/register", [UserFacultyController::class, "create"])->middleware(UsersAdminAuth::class)->name("faculty.register");
     Route::post("/register", [UserFacultyController::class, "store"])->middleware(UsersAdminAuth::class);
     Route::post("/logout", [SessionUserFacultyController::class, "destroy"]);
 
-    // Email Verification
-    Route::get("/email/verify", function(){
-        return view("auth.verify-email");
-    })->middleware("auth:users_faculty")->name("user_faculty.verification.notice");
+    /**
+     * Email verification
+     */
+    Route::prefix("/email")->group(function(){
 
-    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-        $request->fulfill();
+        Route::get("/verify", function(){
+            return view("auth.verify-email");
+        })->middleware("auth:users_faculty")->name("user_faculty.verification.notice");
     
-        return redirect('/');
-    })->middleware(["auth:users_faculty", 'signed'])->name('user_faculty.verification.verify');
+        Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+            $request->fulfill();
+        
+            return redirect('/');
+        })->middleware(["auth:users_faculty", 'signed'])->name('user_faculty.verification.verify');
+    
+        Route::post('/verification-notification', function (Request $request) {
+            $request->user()->sendEmailVerificationNotification();
+        
+            return back()->with('message', 'Verification link sent!');
+        })->middleware(["auth:users_faculty", 'throttle:6,1'])->name('user_faculty.verification.send');
+    });
 
-    Route::post('/email/verification-notification', function (Request $request) {
-        $request->user()->sendEmailVerificationNotification();
-    
-        return back()->with('message', 'Verification link sent!');
-    })->middleware(["auth:users_faculty", 'throttle:6,1'])->name('user_faculty.verification.send');
+    /**
+     * Authorized User endpoints
+     */
 
     Route::middleware([UsersFacultyAuth::class])->group(function(){
         Route::get("/citation/{id}", [FacultyCitationController::class, "edit"]);
@@ -93,23 +132,30 @@ Route::prefix("/faculty")->group(function(){
     });
 });
 
+/**
+ * Super User Routes
+ */
 Route::prefix("/maintainer")->group(function(){
-    Route::get("/login", [SessionUserController::class, "create"])->name("login");
-    Route::post("/login", [SessionUserController::class, "store"]);
+    /**
+     * User Registration and Session
+     */
     Route::get("/register", [UserController::class, "create"])->name("register");
     Route::post("/register", [UserController::class, "store"]);
     Route::post("/logout", [SessionUserController::class, "destroy"])->name("logout");
 
+    /**
+     * Authorized User endpoints
+     */
     Route::middleware("auth")->group(function(){
         Route::get("/", [UserController::class, "show"])->name("maintainer.index");
 
-        Route::get("/campus", [CampusController::class, "show"])->name("campus.index");
+        Route::get("/campus", [CampusController::class, "index"])->name("campus.index");
         Route::get("/campus/add", [CampusController::class, "create"])->name("campus.create");
         Route::post("/campus/add", [CampusController::class, "store"]);
         Route::get("/campus/{id}", [CampusController::class, "edit"])->name("campus.edit");
         Route::post("/campus/{id}", [CampusController::class, "update"]);
 
-        Route::get("/school", [SchoolController::class, "show"])->name("school.index");
+        Route::get("/school", [SchoolController::class, "index"])->name("school.index");
         Route::get("/school/add", [SchoolController::class, "create"])->name("school.create");
         Route::post("/school/add", [SchoolController::class, "store"]);
         Route::get("/school/{id}", [SchoolController::class, "edit"])->name("school.edit");
@@ -117,7 +163,7 @@ Route::prefix("/maintainer")->group(function(){
 
         Route::get("/department/users", [UserAdminController::class, "index_department_users"])->name("department.users.index");
 
-        Route::get("/department", [DepartmentController::class, "show"])->name("department.index");
+        Route::get("/department", [DepartmentController::class, "index"])->name("department.index");
         Route::get("/department/add", [DepartmentController::class, "create"])->name("department.create");
         Route::post("/department/add", [DepartmentController::class, "store"]);
         Route::get("/department/{id}", [DepartmentController::class, "edit"])->name("department.edit");
@@ -125,7 +171,9 @@ Route::prefix("/maintainer")->group(function(){
     });
 });
 
-// Email Verification
+/**
+ * Super User Email verification
+ */
 Route::get("/email/verify", function(){
     return view("auth.verify-email");
 })->middleware("auth")->name("verification.notice");

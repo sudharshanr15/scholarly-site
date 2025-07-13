@@ -23,7 +23,7 @@ class UsersFacultyAuth
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::guard("users_faculty")->user()){
-            return redirect()->route("users_faculty_login");
+            return redirect()->route("faculty.login");
         }
 
         return $next($request);
