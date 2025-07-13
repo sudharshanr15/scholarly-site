@@ -10,7 +10,7 @@ class CampusController extends Controller
 {
 
     public function create(){
-        return view("campus.form");
+        return view("campus.create");
     }
 
     public function index(){

@@ -24,7 +24,7 @@ class DepartmentController extends Controller
     public function create(){
         $schools = School::all();
 
-        return view("department.form", [
+        return view("department.create", [
             "schools" => $schools
         ]);
     }

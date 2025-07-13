@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if(Auth::user()){
-        return redirect()->route("maintainer.index");
+        return redirect()->route("console.index");
     }else if(Auth::guard("users_admin")->user()){
         return redirect()->route("users_admin.index");
     }else if(Auth::guard("users_faculty")->user()){
@@ -43,8 +43,8 @@ Route::middleware("guest")->group(function(){
     Route::get("/faculty/login", [SessionUserFacultyController::class, "create"])->name("faculty.login");
     Route::post("/faculty/login", [SessionUserFacultyController::class, "store"]);
 
-    Route::get("/login", [SessionUserController::class, "create"])->name("login");
-    Route::post("/login", [SessionUserController::class, "store"]);
+    Route::get("/console/login", [SessionUserController::class, "create"])->name("login");
+    Route::post("/console/login", [SessionUserController::class, "store"]);
 });
 
 /**
@@ -135,9 +135,12 @@ Route::prefix("/faculty")->group(function(){
 /**
  * Super User Routes
  */
-Route::prefix("/maintainer")->group(function(){
+Route::prefix("/console")->group(function(){
     /**
      * User Registration and Session
+     */
+    /**
+     * Table Name: users => /console
      */
     Route::get("/register", [UserController::class, "create"])->name("register");
     Route::post("/register", [UserController::class, "store"]);
@@ -147,7 +150,7 @@ Route::prefix("/maintainer")->group(function(){
      * Authorized User endpoints
      */
     Route::middleware("auth")->group(function(){
-        Route::get("/", [UserController::class, "show"])->name("maintainer.index");
+        Route::get("/", [UserController::class, "show"])->name("console.index");
 
         Route::get("/campus", [CampusController::class, "index"])->name("campus.index");
         Route::get("/campus/add", [CampusController::class, "create"])->name("campus.create");
@@ -161,7 +164,7 @@ Route::prefix("/maintainer")->group(function(){
         Route::get("/school/{id}", [SchoolController::class, "edit"])->name("school.edit");
         Route::post("/school/{id}", [SchoolController::class, "update"]);
 
-        Route::get("/department/users", [UserAdminController::class, "index_department_users"])->name("department.users.index");
+        Route::get("/admin", [UserAdminController::class, "index__console"])->name("console.admin.index");
 
         Route::get("/department", [DepartmentController::class, "index"])->name("department.index");
         Route::get("/department/add", [DepartmentController::class, "create"])->name("department.create");

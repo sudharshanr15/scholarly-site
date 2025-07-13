@@ -26,13 +26,15 @@ class UserAdminController extends Controller
         return view("users_admin.index", ["users" => $users]);
     }
 
-
-    public function index_department_users(){
+    /**
+     * index of console user
+    */
+    public function index__console(){
         $users = DB::table("users_admin as u")
             ->join("departments as d", "u.department_id", "=", "d.id")
             ->get(["u.id", "u.full_name", "u.email", "u.mobile_no", "u.department_id", "u.created_at", "u.email_verified_at", "d.name as department_name"]);
 
-        return view("department.users_admin.index", ["users" => $users]);
+        return view("console.admin.index", ["users" => $users]);
     }
 
     /**

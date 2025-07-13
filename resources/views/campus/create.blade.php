@@ -1,4 +1,4 @@
-<x-user.Layout>
+<x-console.layout>
     <h1 class="mb-6 text-2xl font-semibold">Create Campus</h1>
     <div class="bg-light-fg dark:bg-dark-fg p-6 rounded">
         <form action="" method="POST">
@@ -16,4 +16,4 @@
             <button class="bg-primary text-white rounded-lg w-full p-2 mt-6" type="submit">Create Campus</button>
         </form>
     </div>
-</x-user.Layout>
+</x-console.layout>

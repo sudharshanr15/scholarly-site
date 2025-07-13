@@ -24,7 +24,7 @@ class SchoolController extends Controller
     public function create(){
         $campuses = Campus::all();
 
-        return view("school.form", [
+        return view("school.create", [
             "campuses" => $campuses
         ]);
     }

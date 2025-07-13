@@ -2,7 +2,7 @@
 
 $pages = [
     "Dashboard" => [
-        "route" => "maintainer.index"
+        "route" => "console.index"
     ],
     "Campus" => [
         "route" => "campus.index"
@@ -14,7 +14,7 @@ $pages = [
         "route" => "department.index"
     ],
     "Department Users" => [
-        "route" => "department.users.index"
+        "route" => "console.admin.index"
     ]
 ]
 

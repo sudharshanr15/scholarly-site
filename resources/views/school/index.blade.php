@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.4/css/buttons.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
 @endpush
-<x-user.Layout>
+<x-console.layout>
     <h1 class="mb-6 text-2xl font-semibold">School</h1>
 
     <div class="flex justify-between items-center mb-4">
@@ -44,4 +44,4 @@
             </table>
         </div>
     </div>
-</x-user.Layout>
+</x-console.layout>

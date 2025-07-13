@@ -13,7 +13,7 @@ class UserController extends Controller
 {
 
     public function show(){
-        return view("user.Index");
+        return view("console.index");
     }
 
     public function create(){
