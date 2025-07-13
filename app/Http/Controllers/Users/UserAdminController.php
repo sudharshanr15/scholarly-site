@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\UserAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Password;
 
 class UserAdminController extends Controller
@@ -18,7 +19,11 @@ class UserAdminController extends Controller
      */
     public function index()
     {
-        //
+        $users = DB::table("users_admin as u")
+            ->join("departments as d", "u.department_id", "=", "d.id")
+            ->get(["u.id", "u.full_name", "u.email", "u.mobile_no", "u.department_id", "u.created_at", "u.email_verified_at", "d.name as department_name"]);
+
+        return view("users_admin.index", ["users" => $users]);
     }
 
     /**

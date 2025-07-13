@@ -68,7 +68,7 @@
             </div>
             <div class="mb-4">
                 <x-form.label for="mobile_no">Mobile</x-form.label>
-                <x-form.input id="mobile_no" name="mobile_no" placeholder="+91 9876543219"></x-form.input>
+                <x-form.input id="mobile_no" name="mobile_no" placeholder="+91 9876543219" value="{{ old('mobile_no') }}"></x-form.input>
                 <x-form.error name="mobile_no"></x-form.error>
             </div>
             <div class="mb-4">
@@ -79,7 +79,7 @@
                     id="department_id"
                 >
                     @foreach($departments as $dept)
-                    <option value="{{ $dept['id'] }}">{{ $dept['name'] }}</option>
+                    <option value="{{ $dept['id'] }}" @selected($dept['id'] == old('department_id'))>{{ $dept['name'] }}</option>
                     @endforeach
                 </select>
                 <x-form.error name="department_id" />
@@ -89,7 +89,7 @@
                     Password
                     <span class="block text-sm">(Password is auto-generated)</span>
                 </x-form.label>
-                <x-form.input type="" value="{{ fake()->password(10) }}" id="password" name="password" placeholder="**********"></x-form.input>
+                <x-form.input type="" :value="Str::password(16)" id="password" name="password" placeholder="**********"></x-form.input>
                 <x-form.error name="password"></x-form.error>
             </div>
             <button class="bg-primary text-white rounded-lg w-full p-2 mt-4" type="submit">Create account</button>

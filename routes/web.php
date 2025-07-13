@@ -22,9 +22,9 @@ Route::get('/', function () {
 
 Route::prefix("/admin")->group(function(){
     // User Authentication
-    Route::get("/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("users_admin_login"); 
+    Route::get("/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("users_admin.login"); 
     Route::post("/login", [SessionUserAdminController::class, "store"]);
-    Route::get("/register", [UserAdminController::class, "create"])->middleware("auth");
+    Route::get("/register", [UserAdminController::class, "create"])->middleware("auth")->name("users_admin.register");
     Route::post("/register", [UserAdminController::class, "store"])->middleware("auth");
     Route::post("/logout", [SessionUserAdminController::class, "destroy"]);
 
@@ -98,6 +98,8 @@ Route::prefix("/maintainer")->group(function(){
         Route::post("/school/add", [SchoolController::class, "store"]);
         Route::get("/school/{id}", [SchoolController::class, "edit"])->name("school.edit");
         Route::post("/school/{id}", [SchoolController::class, "update"]);
+
+        Route::get("/department/users", [UserAdminController::class, "index"])->name("department.users.index");
 
         Route::get("/department", [DepartmentController::class, "show"])->name("department.index");
         Route::get("/department/add", [DepartmentController::class, "create"])->name("department.create");

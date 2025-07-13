@@ -12,6 +12,9 @@ $pages = [
     ],
     "Department" => [
         "route" => "department.index"
+    ],
+    "Department Users" => [
+        "route" => "department.users.index"
     ]
 ]
 
