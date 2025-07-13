@@ -22,7 +22,7 @@ Route::get('/', function () {
     if(Auth::user()){
         return redirect()->route("console.index");
     }else if(Auth::guard("users_admin")->user()){
-        return redirect()->route("users_admin.index");
+        return redirect()->route("admin.index");
     }else if(Auth::guard("users_faculty")->user()){
         return redirect()->route("users_faculty.index");
     }else{
@@ -37,7 +37,7 @@ Route::middleware("guest")->group(function(){
     /**
      * Session Authentication endpoints
      */
-    Route::get("/admin/login", [SessionUserAdminController::class, "create"])->name("users_admin.login"); 
+    Route::get("/admin/login", [SessionUserAdminController::class, "create"])->name("admin.login"); 
     Route::post("/admin/login", [SessionUserAdminController::class, "store"]);
 
     Route::get("/faculty/login", [SessionUserFacultyController::class, "create"])->name("faculty.login");
@@ -54,7 +54,7 @@ Route::prefix("/admin")->group(function(){
     /**
      * User Registration and Session
      */
-    Route::get("/register", [UserAdminController::class, "create"])->middleware("auth")->name("users_admin.register");
+    Route::get("/register", [UserAdminController::class, "create"])->middleware("auth")->name("admin.register");
     Route::post("/register", [UserAdminController::class, "store"])->middleware("auth");
     Route::post("/logout", [SessionUserAdminController::class, "destroy"]);
 
@@ -83,8 +83,8 @@ Route::prefix("/admin")->group(function(){
      * Authorized User endpoints
      */
     Route::middleware(UsersAdminAuth::class)->group(function(){
-        Route::get("/", [UserAdminController::class, "index"])->name("users_admin.index");
-        Route::get("/faculty", [UserFacultyController::class, "index_user_admin"])->name("user_admin.faculty.index");
+        Route::get("/", [UserAdminController::class, "index"])->name("admin.index");
+        Route::get("/faculty", [UserFacultyController::class, "index__admin"])->name("admin.faculty.index");
         Route::get("/faculty/register", [UserFacultyController::class, "create"]);
     });
 });

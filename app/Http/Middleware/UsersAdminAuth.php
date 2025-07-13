@@ -23,7 +23,7 @@ class UsersAdminAuth
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::guard("users_admin")->user()){
-            return redirect()->route("users_admin.login");
+            return redirect()->route("admin.login");
         }
 
         return $next($request);

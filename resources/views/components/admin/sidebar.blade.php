@@ -2,7 +2,7 @@
 
 $pages = [
     "Faculty" => [
-        "route" => "user_admin.faculty.index"
+        "route" => "admin.faculty.index"
     ],
 ]
 

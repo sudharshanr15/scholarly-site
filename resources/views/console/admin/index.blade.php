@@ -17,7 +17,7 @@
 
     <div class="flex justify-between items-center mb-4">
         <h2 class="text-lg font-semibold">All Users</h2>
-        <a href="{{ route('users_admin.register') }}" class="bg-primary text-white rounded-lg px-4 py-2 font-medium">Create +</a>
+        <a href="{{ route('admin.register') }}" class="bg-primary text-white rounded-lg px-4 py-2 font-medium">Create +</a>
     </div>
     <div class="bg-light-fg dark:bg-dark-fg p-6 rounded overflow-x-auto">
         <div>

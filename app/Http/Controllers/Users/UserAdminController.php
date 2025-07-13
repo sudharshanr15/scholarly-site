@@ -23,7 +23,7 @@ class UserAdminController extends Controller
             ->join("departments as d", "u.department_id", "=", "d.id")
             ->get(["u.id", "u.full_name", "u.email", "u.mobile_no", "u.department_id", "u.created_at", "u.email_verified_at", "d.name as department_name"]);
 
-        return view("users_admin.index", ["users" => $users]);
+        return view("admin.index", ["users" => $users]);
     }
 
     /**
@@ -44,7 +44,7 @@ class UserAdminController extends Controller
     {
         $departments = Department::all();
 
-        return view("users_admin.register", ["departments" => $departments]);
+        return view("admin.register", ["departments" => $departments]);
     }
 
     /**

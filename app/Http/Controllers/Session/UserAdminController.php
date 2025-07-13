@@ -15,7 +15,7 @@ class UserAdminController extends Controller
 
     public function create()
     {
-        return view("users_admin.login");
+        return view("admin.login");
     }
 
 

@@ -15,7 +15,7 @@ class UserFacultyController extends Controller
 {
     private string $guard = "users_faculty";
 
-    public function index_user_admin(){
+    public function index__admin(){
         $users = DB::table("users_faculty as u")
             ->join("departments as d", "u.department_id", "=", "d.id")
             ->get(["u.id", "u.full_name", "u.email", "u.mobile", "u.department_id", "u.created_at", "u.email_verified_at", "d.name as department_name"]);
