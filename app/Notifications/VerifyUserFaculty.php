@@ -26,7 +26,7 @@ class VerifyUserFaculty extends VerifyEmail implements ShouldQueue
         }
 
         return URL::temporarySignedRoute(
-            "user_faculty.verification.verify",
+            "faculty.verification.verify",
             now()->addHour(),
             [
                 "id" => $notifiable->getKey(),

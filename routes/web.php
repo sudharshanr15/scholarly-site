@@ -24,7 +24,7 @@ Route::get('/', function () {
     }else if(Auth::guard("users_admin")->user()){
         return redirect()->route("admin.index");
     }else if(Auth::guard("users_faculty")->user()){
-        return redirect()->route("users_faculty.index");
+        // return redirect()->route("faculty.index");
     }else{
         throw new ModelNotFoundException();
     }
@@ -107,19 +107,19 @@ Route::prefix("/faculty")->group(function(){
 
         Route::get("/verify", function(){
             return view("auth.verify-email");
-        })->middleware("auth:users_faculty")->name("user_faculty.verification.notice");
+        })->middleware("auth:users_faculty")->name("faculty.verification.notice");
     
         Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
             $request->fulfill();
         
             return redirect('/');
-        })->middleware(["auth:users_faculty", 'signed'])->name('user_faculty.verification.verify');
+        })->middleware(["auth:users_faculty", 'signed'])->name('faculty.verification.verify');
     
         Route::post('/verification-notification', function (Request $request) {
             $request->user()->sendEmailVerificationNotification();
         
             return back()->with('message', 'Verification link sent!');
-        })->middleware(["auth:users_faculty", 'throttle:6,1'])->name('user_faculty.verification.send');
+        })->middleware(["auth:users_faculty", 'throttle:6,1'])->name('faculty.verification.send');
     });
 
     /**

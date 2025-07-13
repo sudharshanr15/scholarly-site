@@ -20,13 +20,13 @@ class UserFacultyController extends Controller
             ->join("departments as d", "u.department_id", "=", "d.id")
             ->get(["u.id", "u.full_name", "u.email", "u.mobile", "u.department_id", "u.created_at", "u.email_verified_at", "d.name as department_name"]);
 
-        return view("users_faculty.index", ["users" => $users]);
+        return view("faculty.index", ["users" => $users]);
     }
 
     public function create(){
         $departments = Department::all();
 
-        return view("users_faculty.register", ["departments" => $departments]);
+        return view("faculty.register", ["departments" => $departments]);
     }
 
     public function store(Request $request){

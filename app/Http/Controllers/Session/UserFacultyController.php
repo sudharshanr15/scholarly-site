@@ -12,7 +12,7 @@ class UserFacultyController extends Controller
     private string $guard = "users_faculty";
 
     public function create(){
-        return view("users_faculty.login");
+        return view("faculty.login");
     }
 
     public function store(Request $request){
