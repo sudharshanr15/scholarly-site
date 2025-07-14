@@ -24,7 +24,7 @@ Route::get('/', function () {
     }else if(Auth::guard("users_admin")->user()){
         return redirect()->route("admin.index");
     }else if(Auth::guard("users_faculty")->user()){
-        // return redirect()->route("faculty.index");
+        return redirect()->route("faculty.index");
     }else{
         throw new ModelNotFoundException();
     }
@@ -37,10 +37,10 @@ Route::middleware("guest")->group(function(){
     /**
      * Session Authentication endpoints
      */
-    Route::get("/admin/login", [SessionUserAdminController::class, "create"])->name("admin.login"); 
+    Route::get("/admin/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("admin.login"); 
     Route::post("/admin/login", [SessionUserAdminController::class, "store"]);
 
-    Route::get("/faculty/login", [SessionUserFacultyController::class, "create"])->name("faculty.login");
+    Route::get("/faculty/login", [SessionUserFacultyController::class, "create"])->middleware("guest:users_faculty")->name("faculty.login");
     Route::post("/faculty/login", [SessionUserFacultyController::class, "store"]);
 
     Route::get("/console/login", [SessionUserController::class, "create"])->name("login");

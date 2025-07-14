@@ -33,7 +33,7 @@ class UserAdminController extends Controller
         }
         
         $request->session()->regenerate();
-        return redirect("/");
+        return redirect()->route("admin.index");
     }
 
     public function destroy(Request $request)
