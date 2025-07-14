@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("indexed_in")->nullable();
             $table->string("published_year");
             $table->string("apa");
+            $table->string("citation_id")->nullable();
             $table->timestamps();
         });
     }
