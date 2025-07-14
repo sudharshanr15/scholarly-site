@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("link");
             $table->string("indexed_in")->nullable();
             $table->string("published_year");
-            $table->string("apa");
+            $table->string("apa")->nullable();
             $table->string("citation_id")->nullable();
             $table->timestamps();
         });
