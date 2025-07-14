@@ -20,7 +20,7 @@ class UserFacultyController extends Controller
             ->join("departments as d", "u.department_id", "=", "d.id")
             ->get(["u.id", "u.full_name", "u.email", "u.mobile", "u.department_id", "u.created_at", "u.email_verified_at", "d.name as department_name"]);
 
-        return view("faculty.index", ["users" => $users]);
+        return view("admin.faculty.index", ["users" => $users]);
     }
 
     public function create(){
