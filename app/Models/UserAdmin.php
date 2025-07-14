@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Notifications\VerifyUserAdmin;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class UserAdmin extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use HasFactory, Notifiable;
     
     //
     protected $table = "users_admin";
