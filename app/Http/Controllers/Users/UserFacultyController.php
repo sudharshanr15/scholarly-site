@@ -15,6 +15,10 @@ class UserFacultyController extends Controller
 {
     private string $guard = "users_faculty";
 
+    public function index(){
+        return view("faculty.index");
+    }
+
     public function index__admin(){
         $users = DB::table("users_faculty as u")
             ->join("departments as d", "u.department_id", "=", "d.id")

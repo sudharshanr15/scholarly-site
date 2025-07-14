@@ -127,6 +127,7 @@ Route::prefix("/faculty")->group(function(){
      */
 
     Route::middleware([UsersFacultyAuth::class])->group(function(){
+        Route::get("/", [UserFacultyController::class, "index"])->name("faculty.index");
         Route::get("/citation/{id}", [FacultyCitationController::class, "edit"]);
         Route::post("/citation/{id}", [FacultyCitationController::class, "update_faculty"]);
     });
