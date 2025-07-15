@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CampusController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FacultyCitationController;
@@ -37,7 +38,7 @@ Route::middleware("guest")->group(function(){
     /**
      * Session Authentication endpoints
      */
-    Route::get("/admin/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("admin.login"); 
+    Route::get("/admin/login", [SessionUserAdminController::class, "create"])->middleware("guest:users_admin")->name("admin.login");
     Route::post("/admin/login", [SessionUserAdminController::class, "store"]);
 
     Route::get("/faculty/login", [SessionUserFacultyController::class, "create"])->middleware("guest:users_faculty")->name("faculty.login");
@@ -65,16 +66,16 @@ Route::prefix("/admin")->group(function(){
         Route::get("/verify", function(){
             return view("auth.verify-email");
         })->middleware("auth:users_admin")->name("admin.verification.notice");
-    
+
         Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
             $request->fulfill();
-        
+
             return redirect('/');
         })->middleware(["auth:users_admin", 'signed'])->name('admin.verification.verify');
-    
+
         Route::post('/verification-notification', function (Request $request) {
             $request->user()->sendEmailVerificationNotification();
-        
+
             return back()->with('message', 'Verification link sent!');
         })->middleware(["auth:users_admin", 'throttle:6,1'])->name('admin.verification.send');
     });
@@ -108,16 +109,16 @@ Route::prefix("/faculty")->group(function(){
         Route::get("/verify", function(){
             return view("auth.verify-email");
         })->middleware("auth:users_faculty")->name("faculty.verification.notice");
-    
+
         Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
             $request->fulfill();
-        
+
             return redirect('/');
         })->middleware(["auth:users_faculty", 'signed'])->name('faculty.verification.verify');
-    
+
         Route::post('/verification-notification', function (Request $request) {
             $request->user()->sendEmailVerificationNotification();
-        
+
             return back()->with('message', 'Verification link sent!');
         })->middleware(["auth:users_faculty", 'throttle:6,1'])->name('faculty.verification.send');
     });
@@ -128,6 +129,8 @@ Route::prefix("/faculty")->group(function(){
 
     Route::middleware([UsersFacultyAuth::class])->group(function(){
         Route::get("/", [UserFacultyController::class, "index"])->name("faculty.index");
+        Route::get("/articles", [ArticleController::class, "index__faculty"])->name("faculty.article.index");
+        Route::get("/articles/{id}", [ArticleController::class, "edit__faculty"])->name("faculty.article.edit");
         Route::get("/citation/{id}", [FacultyCitationController::class, "edit"]);
         Route::post("/citation/{id}", [FacultyCitationController::class, "update_faculty"]);
     });
@@ -193,3 +196,10 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(["auth", 'throttle:6,1'])->name('verification.send');
+
+/*
+ * General Routes applicable for all authorized users
+ * */
+Route::middleware(UsersFacultyAuth::class)->group(function(){
+    Route::post("/article/{id}", [ArticleController::class, "update"])->name("article.edit");
+});
