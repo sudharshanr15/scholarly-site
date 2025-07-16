@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('article_citations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("article_id")->constrained("articles", "id", "fk_article_citations_article_id");
+            $table->string("citation_id")->unique();
             $table->string("citation_year");
             $table->string("citation_count");
             $table->timestamps();
