@@ -18,18 +18,21 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GuestController;
 
-Route::get('/', function () {
-    if(Auth::user()){
-        return redirect()->route("console.index");
-    }else if(Auth::guard("users_admin")->user()){
-        return redirect()->route("admin.index");
-    }else if(Auth::guard("users_faculty")->user()){
-        return redirect()->route("faculty.index");
-    }else{
-        throw new ModelNotFoundException();
-    }
-});
+//Route::get('/', function () {
+//    if(Auth::user()){
+//        return redirect()->route("console.index");
+//    }else if(Auth::guard("users_admin")->user()){
+//        return redirect()->route("admin.index");
+//    }else if(Auth::guard("users_faculty")->user()){
+//        return redirect()->route("faculty.index");
+//    }else{
+//        throw new ModelNotFoundException();
+//    }
+//});
+
+Route::get("/", [GuestController::class, "index"])->name("guest.index");
 
 /**
  * Guest User Routes
