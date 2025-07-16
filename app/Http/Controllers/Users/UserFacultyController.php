@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Users;
 
+use App\Helpers\SerpApi;
 use App\Http\Controllers\Controller;
+use App\Models\Article;
+use App\Models\ArticleCitation;
 use App\Models\Department;
+use App\Models\FacultyCitation;
 use App\Models\UserFaculty;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -16,6 +20,21 @@ class UserFacultyController extends Controller
     private string $guard = "users_faculty";
 
     public function index(){
+        $faculty_id = Auth::guard($this->guard)->user()->id;
+        $serp = new SerpApi($faculty_id);
+        $articles = $serp->get_articles();
+        $article_citations = $serp->get_article_citations();
+        $faculty_citation = $serp->get_faculty_citations();
+
+        DB::transaction(function() use ($articles, $article_citations, $faculty_citation){
+            Article::upsert($articles, "citation_id", array_keys($articles[0]));
+            FacultyCitation::updateOrCreate(
+                ["faculty_id" => 1],
+                $faculty_citation
+            );
+            ArticleCitation::upsert($article_citations, "citation_id", array_keys($article_citations[0]));
+        });
+
         return view("faculty.index");
     }
 
