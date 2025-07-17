@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     @stack("css")
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-light-bg text-dark-text dark:bg-dark-bg dark:text-light-text">
+<body class="bg-light-dp0 text-dark-text dark:bg-dark-dp0 dark:text-light-text">
     <div class="flex min-h-screen">
         {{ $slot }}
     </div>

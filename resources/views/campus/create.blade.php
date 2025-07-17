@@ -13,7 +13,7 @@
                 <x-form.input id="address" name="address" value="{{ old('address') }}" />
                 <x-form.error name="address" />
             </div>
-            <button class="bg-primary text-white rounded-lg w-full p-2 mt-6" type="submit">Create Campus</button>
+            <x-button type="submit">CREATE</x-button>
         </form>
     </div>
 </x-console.layout>

@@ -81,12 +81,24 @@
     --text-label-sm: 0.6875em;
     --text-label-sm--font-weight: 500;
     --text-label-sm--letter-spacing: 1em;
+}
 
+@theme {
+    --color-primary: hsl(216, 100%, 58%);
+
+    --color-dark-dp0: hsl(210, 7%, 4%);
+    --color-dark-dp1: hsl(210, 7%, 8%);
+    --color-dark-dp2: hsl(210, 7%, 12%);
+    --color-dark-dp3: hsl(210, 7%, 16%);
+    --color-dark-dp4: hsl(210, 7%, 20%);
+
+    --color-light-dp1: hsl(0, 0%, 100%);
+    --color-light-dp0: hsl(210, 78%, 98%);
+    /*--color-light-dp0: hsl(210, 7%, 92%);*/
+    /*--color-light-dp0: hsl(210, 7%, 88%);*/
 }
 
 @theme inline {
-    --color-primary: oklch(0.5569 0.2469 276.05);
-
     /* backgroud and foreground colors */
     --color-light-bg: oklch(0.985 0.002 247.839);
     --color-dark-bg: oklch(0.1448 0 0);
@@ -94,14 +106,19 @@
     --color-dark-fg: oklch(0.2046 0 0);
 
     /* text light and dark colors */
-    --color-light-text: var(--color-white);
-    --color-dark-text: oklch(0.2695 0.0133 272.86);
+    --color-light-text: var(--color-gray-100);
+    --color-dark-text: var(--color-dark-dp0);
+
 }
 
 
 @layer base{
     button, a{
         @apply cursor-pointer
+    }
+
+    svg{
+        @apply fill-dark-dp3 dark:fill-light-text
     }
 }
 
@@ -135,14 +152,18 @@
     }
 
     .navbar{
-        @apply dark:bg-dark-fg/20 dark:border-white/10 shadow-md
+        @apply bg-light-dp1 dark:bg-dark-dp1 border-white/10 shadow-md
+    }
+
+    .input-label{
+        @apply text-body-md text-dark-text dark:text-gray-400
     }
 
     .input{
-        @apply mt-2 w-full block p-2 text-sm rounded text-dark-text dark:text-light-text outline outline-gray-400 focus:outline-3 dark:outline-[#4c4f52] dark:outline-white/20 dark:bg-white/10
+        @apply mt-2 w-full block p-2 text-label-lg rounded text-dark-text dark:text-light-text outline outline-gray-400 focus:outline-3 dark:outline-[#4c4f52] dark:outline-white/20 dark:bg-dark-dp2
     }
 
     .card{
-        @apply dark:bg-dark-fg p-6 rounded border border-white/10
+        @apply dark:bg-dark-dp1 p-6 rounded border border-white/10
     }
 }
