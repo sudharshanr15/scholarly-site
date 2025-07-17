@@ -1,6 +1,6 @@
 <x-console.layout>
-    <h1 class="mb-6 text-2xl font-semibold">Create Campus</h1>
-    <div class="bg-light-fg dark:bg-dark-fg p-6 rounded">
+    <h1 class="heading-1">Create Campus</h1>
+    <div class="card">
         <form action="" method="POST">
             @csrf
             <div class="mb-4">
