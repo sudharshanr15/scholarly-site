@@ -11,7 +11,7 @@
             </button>
             <button class="inline-flex items-center gap-4">
                 <span class="h-12 inline-flex items-center justify-center aspect-square bg-primary rounded-full">
-                    <span class="font-bold text-label-lg">
+                    <span class="font-bold text-label-lg text-light-text">
                         A
                     </span>
                 </span>

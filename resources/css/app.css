@@ -94,6 +94,8 @@
 
     --color-light-dp1: hsl(0, 0%, 100%);
     --color-light-dp0: hsl(210, 78%, 98%);
+
+    --color-alert-error: oklch(0.687 0.237 25.331);
     /*--color-light-dp0: hsl(210, 7%, 92%);*/
     /*--color-light-dp0: hsl(210, 7%, 88%);*/
 }
@@ -156,14 +158,14 @@
     }
 
     .input-label{
-        @apply text-body-md text-dark-text dark:text-gray-400
+        @apply text-body-md text-dark-text dark:text-light-text
     }
 
     .input{
-        @apply mt-2 w-full block p-2 text-label-lg rounded text-dark-text dark:text-light-text outline outline-gray-400 focus:outline-3 dark:outline-[#4c4f52] dark:outline-white/20 dark:bg-dark-dp2
+        @apply mt-2 w-full block p-2 text-body-md rounded text-dark-text dark:text-light-text outline outline-gray-400 focus:outline-3 dark:outline-[#4c4f52] dark:outline-white/20 dark:bg-dark-dp2
     }
 
     .card{
-        @apply dark:bg-dark-dp1 p-6 rounded border border-white/10
+        @apply bg-light-dp1 shadow dark:bg-dark-dp1 p-6 rounded border border-white/10
     }
 }

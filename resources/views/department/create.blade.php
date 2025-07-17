@@ -1,6 +1,8 @@
 <x-console.layout>
-    <h1 class="mb-6 text-2xl font-semibold">Create Department</h1>
-    <div class="bg-light-fg dark:bg-dark-fg p-6 rounded">
+    <h1 class="heading-2">Department</h1>
+
+    <div class="card">
+        <h2 class="text-headline-sm font-semibold leading-none mb-6">Create Department</h2>
         <form action="" method="POST">
             @csrf
             <div class="mb-4">
@@ -21,7 +23,7 @@
                 </select>
                 <x-form.error name="school_id" />
             </div>
-            <button class="bg-primary text-white rounded-lg w-full p-2 mt-6" type="submit">Create Campus</button>
+            <x-button class="mt-2" type="submit">CREATE</x-button>
         </form>
     </div>
 </x-console.layout>

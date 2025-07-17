@@ -1,6 +1,8 @@
 <x-console.layout>
-    <h1 class="heading-1">Create Campus</h1>
+    <h1 class="heading-2">Campus</h1>
+
     <div class="card">
+        <h2 class="text-headline-sm font-semibold leading-none mb-6">Create Campus</h2>
         <form action="" method="POST">
             @csrf
             <div class="mb-4">
@@ -13,7 +15,7 @@
                 <x-form.input id="address" name="address" value="{{ old('address') }}" />
                 <x-form.error name="address" />
             </div>
-            <x-button type="submit">CREATE</x-button>
+            <x-button class="mt-6" type="submit">CREATE</x-button>
         </form>
     </div>
 </x-console.layout>

@@ -13,13 +13,20 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
 @endpush
 <x-console.layout>
-    <h1 class="mb-6 text-2xl font-semibold">Campus</h1>
+    <h1 class="heading-2">Campus</h1>
 
-    <div class="flex justify-between items-center mb-4">
-        <h2 class="text-lg font-semibold">All Campus</h2>
-        <a href="{{ route('campus.create') }}" class="bg-primary text-white rounded-lg px-4 py-2 font-medium">Create +</a>
-    </div>
-    <div class="bg-light-fg dark:bg-dark-fg p-6 rounded">
+    <div class="card">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-headline-sm font-semibold">All Campus</h2>
+            <a href="{{ route('campus.create') }}" class="">
+                <x-button class="inline-flex items-center gap-2">
+                        Create
+                    <span class="inline">
+                        <x-icon.add class="h-6 fill-light-text" />
+                    </span>
+                </x-button>
+            </a>
+        </div>
         <div>
             <table id="myTable" class="display nowrap">
                 <thead>

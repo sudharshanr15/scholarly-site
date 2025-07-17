@@ -1,6 +1,9 @@
 <x-console.layout>
-    <h1 class="mb-6 text-2xl font-semibold">Create Department Admin</h1>
-    <div class="bg-light-fg dark:bg-dark-fg p-6 rounded">
+    <h1 class="heading-2">Department Users</h1>
+
+    <div class="card">
+        <h2 class="text-headline-sm font-semibold leading-none mb-6">Create User</h2>
+
         <form action="" method="POST">
             @csrf
             <div class="mt-4 text-center">
@@ -37,12 +40,12 @@
             <div class="mb-4">
                 <x-form.label for="password">
                     Password
-                    <span class="block text-sm">(Password is auto-generated)</span>
+                    <span class="block text-title-sm">(Password is auto-generated)</span>
                 </x-form.label>
                 <x-form.input type="" :value="Str::password(16)" id="password" name="password" placeholder="**********"></x-form.input>
                 <x-form.error name="password"></x-form.error>
             </div>
-            <button class="bg-primary text-white rounded-lg w-full p-2 mt-4" type="submit">Create account</button>
+            <x-button class="mt-6" type="submit">CREATE</x-button>
         </form>
     </div>
 </x-console.layout>
