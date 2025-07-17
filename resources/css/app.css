@@ -13,12 +13,13 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-    --color-primary: var(--color-violet-700);
+    --color-primary: oklch(62.3% 0.214 259.815);
+
     /* backgroud and foreground colors */
     --color-light-bg: oklch(0.985 0.002 247.839);
-    --color-dark-bg: oklch(0.1874 0.0083 274.45);
+    --color-dark-bg: oklch(0.1448 0 0);
     --color-light-fg: rgb(255, 255, 255);
-    --color-dark-fg: oklch(0.2275 0.0139 272.7);
+    --color-dark-fg: oklch(0.2046 0 0);
 
     /* text light and dark colors */
     --color-light-text: var(--color-gray-300);
@@ -28,5 +29,11 @@
 @layer base{
     button, a{
         @apply cursor-pointer
+    }
+}
+
+@layer components{
+    .navbar{
+        @apply dark:bg-dark-fg/20 border-white/10 shadow-md
     }
 }

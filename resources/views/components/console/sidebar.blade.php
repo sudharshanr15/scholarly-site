@@ -20,8 +20,8 @@ $pages = [
 
 ?>
 
-<div class="relative hidden md:block transition duration-150 z-20 min-h-screen w-min">
-    <aside class="absolute md:relative bg-light-fg h-full dark:bg-dark-fg">
+<div class="relative top-0 hidden md:block transition duration-150 z-20 min-h-screen w-min">
+    <aside class="absolute md:relative h-full navbar border-r">
         <div class="w-64 overflow-y-auto py-4">
             <ul class="mt-6 text-gray-500 dark:text-gray-400">
                 @foreach($pages as $page => $val)
